@@ -1,0 +1,214 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+struct Task {
+    int id;
+    string description;
+    bool completed;
+    Task(int id, string description) : id(id), description(description), completed(false) {}
+};
+class ToDoList {
+private:
+    vector<Task> tasks;
+    int next_id;
+public:
+    ToDoList() : next_id(1) {}
+    void addTask(string description) {
+        tasks.emplace_back(next_id++, description);
+        cout << "Task is added successfully.\n";
+    }
+
+    void viewTasks() {
+        if (tasks.empty()) {
+            cout << "No tasks was currently noted.\n";
+            return;
+        }
+        for (const auto &task : tasks) {
+            cout << "ID: " << task.id
+                 << ", Task: " << task.description
+                 << ", Status: " << (task.completed ? "Completed" : "Pending") << "\n";
+        }
+    }
+
+    void markTaskCompleted(int id) {
+        for (auto &task : tasks) {
+            if (task.id == id) {
+                task.completed = true;
+                cout << "Task is marked as completed.\n";
+                return;
+            }
+        }
+        cout << "Task is  not found.\n";
+    }
+
+    void removeTask(int id) {
+        for (auto it = tasks.begin(); it != tasks.end(); ++it) {
+            if (it->id == id) {
+                tasks.erase(it);
+                cout << "Task is removed successfully.\n";
+                return;
+            }
+        }
+        cout << "Task  is not found.\n";
+    }
+};
+void displayMenu() {
+    cout << "To-Do List Manager\n";
+    cout << "1. Add A Task\n";
+    cout << "2. View The Tasks\n";
+    cout << "3. Mark A Task As Completed\n";
+    cout << "4. Remove Task\n";
+    cout << "5. Exit\n";
+    cout << "Enter your choice: ";
+}
+
+int main() {
+    ToDoList toDoList;
+    int choice;
+
+    while (true) {
+        displayMenu();
+        cin >> choice;
+        cin.ignore();
+
+        if (choice == 5) break;
+
+        switch (choice) {
+        case 1: {
+            string description;
+            cout << "Enter the task description: ";
+            getline(cin, description);
+            toDoList.addTask(description);
+            break;
+        }
+        case 2: {
+            toDoList.viewTasks();
+            break;
+        }
+        case 3: {
+            int id;
+            cout << "Enter task ID to mark as completed: ";
+            cin >> id;
+            toDoList.markTaskCompleted(id);
+            break;
+        }
+        case 4: {
+            int id;
+            cout << "Enter task ID to remove: ";
+            cin >> id;
+            toDoList.removeTask(id);
+            break;
+        }
+        default:
+            cout << "Invalid choice. Try again.\n";
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+Example:
+
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 1
+Enter the task description: Make a presentation
+Task is added successfully.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 1
+Enter the task description: Meeting with family
+Task is added successfully.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 1
+Enter the task description: Note submission
+Task is added successfully.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 1
+Enter the task description: Take notes print out
+Task is added successfully.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 2
+ID: 1, Task: Make a presentation, Status: Pending
+ID: 2, Task: Meeting with family, Status: Pending
+ID: 3, Task: Note submission, Status: Pending
+ID: 4, Task: Take notes print out, Status: Pending
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 3
+Enter task ID to mark as completed: 3
+Task is marked as completed.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 2
+ID: 1, Task: Make a presentation, Status: Pending
+ID: 2, Task: Meeting with family, Status: Pending
+ID: 3, Task: Note submission, Status: Completed
+ID: 4, Task: Take notes print out, Status: Pending
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 4
+Enter task ID to remove: 3
+Task is removed successfully.
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 2
+ID: 1, Task: Make a presentation, Status: Pending
+ID: 2, Task: Meeting with family, Status: Pending
+ID: 4, Task: Take notes print out, Status: Pending
+To-Do List Manager
+1. Add A Task
+2. View The Tasks
+3. Mark A Task As Completed
+4. Remove Task
+5. Exit
+Enter your choice: 5
+
+
+=== Code Execution Successful ===
